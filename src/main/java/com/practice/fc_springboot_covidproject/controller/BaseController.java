@@ -1,5 +1,6 @@
 package com.practice.fc_springboot_covidproject.controller;
 
+import com.practice.fc_springboot_covidproject.exception.GeneralException;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class BaseController {
 
     @GetMapping("/")
-    public String root() throws Exception{
-        throw new Exception("테스트에러");
-//        return "index";
+    public String root(){
+        return "index";
     }
 
 //    @RequestMapping("/error")

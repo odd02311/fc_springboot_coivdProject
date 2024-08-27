@@ -1,7 +1,9 @@
 package com.practice.fc_springboot_covidproject.exception;
 
 import com.practice.fc_springboot_covidproject.constant.ErrorCode;
+import lombok.Getter;
 
+@Getter
 public class GeneralException extends RuntimeException {
 
     private final ErrorCode errorCode;
