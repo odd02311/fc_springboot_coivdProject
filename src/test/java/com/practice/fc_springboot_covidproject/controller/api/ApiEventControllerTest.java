@@ -80,6 +80,8 @@ class APIEventControllerTest {
         then(eventService).should().getEvents(any(), any(), any(), any(), any());
     }
 
+
+
     @DisplayName("[API][GET] 이벤트 리스트 조회 - 잘못된 검색 파라미터")
     @Test
     void givenWrongParameters_whenRequestingEvents_thenReturnsFailedStandardResponse() throws Exception {
