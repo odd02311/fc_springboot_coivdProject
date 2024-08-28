@@ -45,6 +45,6 @@ public class GeneralException extends RuntimeException {
 
     public GeneralException(ErrorCode errorCode, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(errorCode.getMessage(), cause, enableSuppression, writableStackTrace);
-        this.errorCode = errorCode;
+        this.errorCode = ErrorCode.INTERNAL_ERROR;
     }
 }
