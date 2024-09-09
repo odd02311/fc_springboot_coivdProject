@@ -1,20 +1,23 @@
 package com.practice.fc_springboot_covidproject.controller.api;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.practice.fc_springboot_covidproject.dto.APIDataResponse;
+import com.practice.fc_springboot_covidproject.dto.AdminRequest;
+import com.practice.fc_springboot_covidproject.dto.LoginRequest;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api")
 @RestController
 public class ApiAuthController {
 
-    @GetMapping("/sign-up")
-    public String signUp() {
-        return "siun-up completed!";
+    @PostMapping("/sign-up")
+    public APIDataResponse<String> signUp(@RequestBody AdminRequest adminRequest) {
+        return APIDataResponse.empty();
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login completed!";
+    @PostMapping("/login")
+    public APIDataResponse<String> login(@RequestBody LoginRequest loginRequest) {
+        return APIDataResponse.empty();
     }
+
+
 }

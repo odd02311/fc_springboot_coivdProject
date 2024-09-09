@@ -1,42 +1,79 @@
 package com.practice.fc_springboot_covidproject.controller.api;
 
+import com.practice.fc_springboot_covidproject.constant.EventStatus;
+import com.practice.fc_springboot_covidproject.dto.APIDataResponse;
+import com.practice.fc_springboot_covidproject.dto.EventRequest;
+import com.practice.fc_springboot_covidproject.dto.EventResponse;
+import com.practice.fc_springboot_covidproject.service.EventService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+@Validated
+@RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
 public class ApiEventController {
 
+    private final EventService eventService;
+
     @GetMapping("/events")
-    public List<String> getEvents() {
-        return List.of("event1", "event2");
+    public APIDataResponse<List<EventResponse>> getEvents(
+            @Positive Long placeId,
+            @Size(min = 2) String eventName,
+            EventStatus eventStatus,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventStartDatetime,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventEndDatetime
+    ) {
+        List<EventResponse> eventResponses = eventService.getEvents(
+                placeId,
+                eventName,
+                eventStatus,
+                eventStartDatetime,
+                eventEndDatetime
+        ).stream().map(EventResponse::from).toList();
+
+        return APIDataResponse.of(eventResponses);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/events")
-    public Boolean createEvent() {
-        return true;
+    public APIDataResponse<String> createEvent(@Valid @RequestBody EventRequest eventRequest) {
+        boolean result = eventService.createEvent(eventRequest.toDTO());
+
+        return APIDataResponse.of(Boolean.toString(result));
     }
 
     @GetMapping("/events/{eventId}")
-    public String getEvent(
-            @PathVariable Integer eventId
-    ){
-        return "event " + eventId;
+    public APIDataResponse<EventResponse> getEvent(@PathVariable Long eventId) {
+        EventResponse eventResponse = EventResponse.from(eventService.getEvent(eventId).orElse(null));
+
+        return APIDataResponse.of(eventResponse);
     }
 
     @PutMapping("/events/{eventId}")
-    public Boolean modifyEvent(
-            @PathVariable Integer eventId
-    ){
-        return true;
+    public APIDataResponse<String> modifyEvent(
+            @PathVariable Long eventId,
+            @RequestBody EventRequest eventRequest
+    ) {
+        boolean result = eventService.modifyEvent(eventId, eventRequest.toDTO());
+        return APIDataResponse.of(Boolean.toString(result));
     }
 
     @DeleteMapping("/events/{eventId}")
-    public Boolean removeEvent(
-            @PathVariable Integer eventId
-    ){
-        return true;
+    public APIDataResponse<String> removeEvent(@PathVariable Long eventId) {
+        boolean result = eventService.removeEvent(eventId);
+
+        return APIDataResponse.of(Boolean.toString(result));
     }
+
 }
 
