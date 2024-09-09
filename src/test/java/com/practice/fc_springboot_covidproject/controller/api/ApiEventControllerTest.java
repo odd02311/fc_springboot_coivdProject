@@ -194,7 +194,7 @@ class APIEventControllerTest {
     @DisplayName("[API][GET] 단일 이벤트 조회 - 이벤트 없는 경우, 빈 표준 API 출력")
     @Test
     void givenEventId_whenRequestingNonexistentEvent_thenReturnsEmptyStandardResponse() throws Exception {
-        // Givenzz
+        // Given
         long eventId = 2L;
         given(eventService.getEvent(eventId)).willReturn(Optional.empty());
 
