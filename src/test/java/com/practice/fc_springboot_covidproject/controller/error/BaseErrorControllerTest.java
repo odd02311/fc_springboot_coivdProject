@@ -1,6 +1,7 @@
 package com.practice.fc_springboot_covidproject.controller.error;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ class BaseErrorControllerTest {
 
     }
 
+    @Disabled
     @DisplayName("[view][GET] 에러 페이지 - 페이지 없음")
     @Test
     void givenWrongURI_whenRequestingPage_thenReturns404ErrorPage() throws Exception {

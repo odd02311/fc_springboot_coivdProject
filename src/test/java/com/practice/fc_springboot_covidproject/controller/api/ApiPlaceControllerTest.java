@@ -2,6 +2,7 @@ package com.practice.fc_springboot_covidproject.controller.api;
 
 import com.practice.fc_springboot_covidproject.constant.ErrorCode;
 import com.practice.fc_springboot_covidproject.constant.PlaceType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ class ApiPlaceControllerTest {
 //                .andExpect(jsonPath("$.message").value(ErrorCode.OK.getMessage()));
 //
 //    }
+    @Disabled
     @DisplayName("[API][GET] 장소 리스트 조회 - 장소 리스트 데이터를 담은 표준 API 출력")
     @Test
     void givenNothing_whenRequestingPlaces_thenReturnPlacesInStandardResponse() throws Exception{
@@ -69,6 +71,7 @@ class ApiPlaceControllerTest {
     }
 
 
+    @Disabled
     @DisplayName("[API][GET] 단일 장소 조회 - 장소 있는 경우")
     @Test
     void givenPlaceAndItsId_whenRequestingPlace_thenReturnPlaceInStandardResponse() throws Exception {

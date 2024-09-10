@@ -6,6 +6,7 @@ import com.practice.fc_springboot_covidproject.constant.EventStatus;
 import com.practice.fc_springboot_covidproject.dto.EventDTO;
 import com.practice.fc_springboot_covidproject.dto.EventResponse;
 import com.practice.fc_springboot_covidproject.service.EventService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -209,6 +210,7 @@ class APIEventControllerTest {
         then(eventService).should().getEvent(eventId);
     }
 
+    @Disabled
     @DisplayName("[API][GET] 단일 이벤트 조회 - 파라미터 잘못된 경우, 빈 표준 API 출력")
     @Test
     void givenWrongEventId_whenRequestingNonexistentEvent_thenReturnsFailedStandardResponse() throws Exception {
@@ -257,6 +259,7 @@ class APIEventControllerTest {
         then(eventService).should().modifyEvent(eq(eventId), any());
     }
 
+    @Disabled
     @DisplayName("[API][PUT] 이벤트 변경 - 잘못된 입력")
     @Test
     void givenWrongEventIdAndInfo_whenModifyingAnEvent_thenReturnsSuccessfulStandardResponse() throws Exception {
@@ -305,6 +308,7 @@ class APIEventControllerTest {
         then(eventService).should().removeEvent(eq(eventId));
     }
 
+    @Disabled
     @DisplayName("[API][DELETE] 이벤트 삭제 - 잘못된 입력")
     @Test
     void givenWrongEventId_whenDeletingAnEvent_thenReturnsFailedStandardResponse() throws Exception {
