@@ -3,7 +3,7 @@ package com.practice.fc_springboot_covidproject.controller.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.practice.fc_springboot_covidproject.constant.ErrorCode;
 import com.practice.fc_springboot_covidproject.constant.EventStatus;
-import com.practice.fc_springboot_covidproject.dto.EventDTO;
+import com.practice.fc_springboot_covidproject.dto.EventDto;
 import com.practice.fc_springboot_covidproject.dto.EventResponse;
 import com.practice.fc_springboot_covidproject.service.EventService;
 import org.junit.jupiter.api.Disabled;
@@ -28,16 +28,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
+@Deprecated
+@Disabled("API 컨트롤러가 필요없는 상황이어서 비활성화")
+@DisplayName("API 컨트롤러 - 이벤트")
 @WebMvcTest(ApiEventController.class)
-class APIEventControllerTest {
+class ApiEventControllerTest {
 
     private final MockMvc mvc;
     private final ObjectMapper mapper;
 
-    @MockBean
-    private EventService eventService;
+    @MockBean private EventService eventService;
 
-    public APIEventControllerTest(
+    public ApiEventControllerTest(
             @Autowired MockMvc mvc,
             @Autowired ObjectMapper mapper
     ) {
@@ -81,8 +83,6 @@ class APIEventControllerTest {
         then(eventService).should().getEvents(any(), any(), any(), any(), any());
     }
 
-
-
     @DisplayName("[API][GET] 이벤트 리스트 조회 - 잘못된 검색 파라미터")
     @Test
     void givenWrongParameters_whenRequestingEvents_thenReturnsFailedStandardResponse() throws Exception {
@@ -107,6 +107,7 @@ class APIEventControllerTest {
     void givenEvent_whenCreatingAnEvent_thenReturnsSuccessfulStandardResponse() throws Exception {
         // Given
         EventResponse eventResponse = EventResponse.of(
+                1L,
                 1L,
                 "오후 운동",
                 EventStatus.OPENED,
@@ -138,6 +139,7 @@ class APIEventControllerTest {
     void givenWrongEvent_whenCreatingAnEvent_thenReturnsFailedStandardResponse() throws Exception {
         // Given
         EventResponse eventResponse = EventResponse.of(
+                1L,
                 0L,
                 "  ",
                 null,
@@ -195,7 +197,7 @@ class APIEventControllerTest {
     @DisplayName("[API][GET] 단일 이벤트 조회 - 이벤트 없는 경우, 빈 표준 API 출력")
     @Test
     void givenEventId_whenRequestingNonexistentEvent_thenReturnsEmptyStandardResponse() throws Exception {
-        // Given
+        // Givenzz
         long eventId = 2L;
         given(eventService.getEvent(eventId)).willReturn(Optional.empty());
 
@@ -210,7 +212,6 @@ class APIEventControllerTest {
         then(eventService).should().getEvent(eventId);
     }
 
-    @Disabled
     @DisplayName("[API][GET] 단일 이벤트 조회 - 파라미터 잘못된 경우, 빈 표준 API 출력")
     @Test
     void givenWrongEventId_whenRequestingNonexistentEvent_thenReturnsFailedStandardResponse() throws Exception {
@@ -233,6 +234,7 @@ class APIEventControllerTest {
         // Given
         long eventId = 1L;
         EventResponse eventResponse = EventResponse.of(
+                eventId,
                 1L,
                 "오후 운동",
                 EventStatus.OPENED,
@@ -259,13 +261,13 @@ class APIEventControllerTest {
         then(eventService).should().modifyEvent(eq(eventId), any());
     }
 
-    @Disabled
     @DisplayName("[API][PUT] 이벤트 변경 - 잘못된 입력")
     @Test
     void givenWrongEventIdAndInfo_whenModifyingAnEvent_thenReturnsSuccessfulStandardResponse() throws Exception {
         // Given
         long eventId = 0L;
         EventResponse eventResponse = EventResponse.of(
+                eventId,
                 0L,
                 "  ",
                 null,
@@ -308,7 +310,6 @@ class APIEventControllerTest {
         then(eventService).should().removeEvent(eq(eventId));
     }
 
-    @Disabled
     @DisplayName("[API][DELETE] 이벤트 삭제 - 잘못된 입력")
     @Test
     void givenWrongEventId_whenDeletingAnEvent_thenReturnsFailedStandardResponse() throws Exception {
@@ -326,8 +327,9 @@ class APIEventControllerTest {
     }
 
 
-    private EventDTO createEventDTO() {
-        return EventDTO.of(
+    private EventDto createEventDTO() {
+        return EventDto.of(
+                1L,
                 1L,
                 "오후 운동",
                 EventStatus.OPENED,

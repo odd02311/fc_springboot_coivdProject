@@ -18,69 +18,65 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class APIExceptionHandlerTest {
+@DisplayName("핸들러 - API 에러 처리")
+class ApiExceptionHandlerTest {
 
-    private APIExceptionHandler sut;
+    private ApiExceptionHandler sut;
     private WebRequest webRequest;
 
     @BeforeEach
     void setUp() {
-        sut = new APIExceptionHandler();
+        sut = new ApiExceptionHandler();
         webRequest = new DispatcherServletWebRequest(new MockHttpServletRequest());
     }
 
     @DisplayName("검증 오류 - 응답 데이터 정의")
     @Test
-    void givenValidationException_whenCallingValidation_thenReturnsResponseEntity() {
+    void givenValidationException_whenHandlingApiException_thenReturnsResponseEntity() {
         // Given
         ConstraintViolationException e = new ConstraintViolationException(Set.of());
 
         // When
-        ResponseEntity<Object> response =  sut.validation(e, webRequest);
+        ResponseEntity<Object> response = sut.validation(e, webRequest);
 
         // Then
-        assertThat(response).isNotNull()
+        assertThat(response)
                 .hasFieldOrPropertyWithValue("body", APIErrorResponse.of(false, ErrorCode.VALIDATION_ERROR, e))
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
-                .hasFieldOrPropertyWithValue("statusCode", HttpStatus.BAD_REQUEST)
-        ;
+                .hasFieldOrPropertyWithValue("statusCode", HttpStatus.BAD_REQUEST);
     }
 
     @DisplayName("프로젝트 일반 오류 - 응답 데이터 정의")
     @Test
-    void givenGeneralException_whenCallingValidation_thenReturnsResponseEntity() {
+    void givenGeneralException_whenHandlingApiException_thenReturnsResponseEntity() {
         // Given
         ErrorCode errorCode = ErrorCode.INTERNAL_ERROR;
         GeneralException e = new GeneralException(errorCode);
 
         // When
-        ResponseEntity<Object> response =  sut.general(e, webRequest);
+        ResponseEntity<Object> response = sut.general(e, webRequest);
 
         // Then
-        assertThat(response).isNotNull()
+        assertThat(response)
                 .hasFieldOrPropertyWithValue("body", APIErrorResponse.of(false, errorCode, e))
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
                 .hasFieldOrPropertyWithValue("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);
-        ;
     }
 
     @DisplayName("기타(전체) 오류 - 응답 데이터 정의")
     @Test
-    void givenOtherException_whenCallingValidation_thenReturnsResponseEntity() {
+    void givenOtherException_whenHandlingApiException_thenReturnsResponseEntity() {
         // Given
         Exception e = new Exception();
 
         // When
-        ResponseEntity<Object> response =  sut.exception(e, webRequest);
+        ResponseEntity<Object> response = sut.exception(e, webRequest);
 
         // Then
         assertThat(response)
                 .hasFieldOrPropertyWithValue("body", APIErrorResponse.of(false, ErrorCode.INTERNAL_ERROR, e))
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
                 .hasFieldOrPropertyWithValue("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);
-        ;
     }
-
-
 
 }

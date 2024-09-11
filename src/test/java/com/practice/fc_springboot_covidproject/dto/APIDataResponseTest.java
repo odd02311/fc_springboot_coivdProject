@@ -7,11 +7,12 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("데이터 - API 기본 응답")
 class APIDataResponseTest {
 
     @DisplayName("문자열 데이터가 주어지면, 표준 성공 응답을 생성한다.")
     @Test
-    void givenStringData_whenCreatingResponse_thenReturnSuccessfulResponse() {
+    void givenStringData_whenCreatingResponse_thenReturnsSuccessfulResponse() {
         // Given
         String data = "test data";
 
@@ -28,7 +29,7 @@ class APIDataResponseTest {
 
     @DisplayName("데이터가 없을 때, 비어있는 표준 성공 응답을 생성한다.")
     @Test
-    void givenNothing_whenCreatingResponse_thenReturnEmptySuccessfulResponse() {
+    void givenNothing_whenCreatingResponse_thenReturnsEmptySuccessfulResponse() {
         // Given
 
         // When
@@ -41,6 +42,5 @@ class APIDataResponseTest {
                 .hasFieldOrPropertyWithValue("message", ErrorCode.OK.getMessage())
                 .hasFieldOrPropertyWithValue("data", null);
     }
-
 
 }

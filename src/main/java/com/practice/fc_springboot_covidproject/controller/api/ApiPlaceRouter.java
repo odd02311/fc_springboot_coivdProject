@@ -3,22 +3,19 @@ package com.practice.fc_springboot_covidproject.controller.api;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.function.RouterFunction;
-import org.springframework.web.servlet.function.RouterFunctions;
 import org.springframework.web.servlet.function.ServerResponse;
 
-import java.util.List;
-
-import static io.micrometer.core.ipc.http.HttpSender.Request.build;
 import static org.springframework.web.servlet.function.RequestPredicates.path;
 import static org.springframework.web.servlet.function.RouterFunctions.route;
 
+@Deprecated
 @Configuration
-public class APIPlaceRouter {
+public class ApiPlaceRouter {
 
 
 
   @Bean
-  public RouterFunction<ServerResponse> placeRouter(APIPlaceHandler apiPlaceHandler) {
+  public RouterFunction<ServerResponse> placeRouter(ApiPlaceHandler apiPlaceHandler) {
     return route().nest(path("/api/places"), builder -> builder
         .GET("", apiPlaceHandler::getPlaces)
         .POST("", req -> ServerResponse.ok().body(true))

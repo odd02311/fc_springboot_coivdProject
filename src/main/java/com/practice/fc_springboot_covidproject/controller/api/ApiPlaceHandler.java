@@ -1,7 +1,6 @@
 package com.practice.fc_springboot_covidproject.controller.api;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.function.HandlerFunction;
 import org.springframework.web.servlet.function.ServerRequest;
 import org.springframework.web.servlet.function.ServerResponse;
 
@@ -11,8 +10,10 @@ import java.util.List;
 import static org.springframework.web.servlet.function.ServerResponse.created;
 import static org.springframework.web.servlet.function.ServerResponse.ok;
 
+
+@Deprecated
 @Component
-public class APIPlaceHandler {
+public class ApiPlaceHandler {
 
   public ServerResponse getPlaces(ServerRequest request) {
     return ok().body(List.of("place1", "place2"));

@@ -7,7 +7,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 public class APIDataResponse<T> extends APIErrorResponse {
 
     private final T data;
@@ -24,7 +24,5 @@ public class APIDataResponse<T> extends APIErrorResponse {
     public static <T> APIDataResponse<T> empty() {
         return new APIDataResponse<>(null);
     }
-
-
 
 }

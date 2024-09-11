@@ -5,6 +5,7 @@ import com.practice.fc_springboot_covidproject.constant.EventStatus;
 import java.time.LocalDateTime;
 
 public record EventResponse(
+        Long id,
         Long placeId,
         String eventName,
         EventStatus eventStatus,
@@ -14,7 +15,9 @@ public record EventResponse(
         Integer capacity,
         String memo
 ) {
+
     public static EventResponse of(
+            Long id,
             Long placeId,
             String eventName,
             EventStatus eventStatus,
@@ -25,6 +28,7 @@ public record EventResponse(
             String memo
     ) {
         return new EventResponse(
+                id,
                 placeId,
                 eventName,
                 eventStatus,
@@ -35,9 +39,11 @@ public record EventResponse(
                 memo
         );
     }
-    public static EventResponse from(EventDTO eventDTO) {
+
+    public static EventResponse from(EventDto eventDTO) {
         if (eventDTO == null) { return null; }
         return EventResponse.of(
+                eventDTO.id(),
                 eventDTO.placeId(),
                 eventDTO.eventName(),
                 eventDTO.eventStatus(),
@@ -48,4 +54,5 @@ public record EventResponse(
                 eventDTO.memo()
         );
     }
+
 }

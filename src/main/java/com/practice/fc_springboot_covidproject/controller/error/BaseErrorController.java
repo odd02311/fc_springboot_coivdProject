@@ -21,7 +21,8 @@ public class BaseErrorController implements ErrorController {
         HttpStatus status = HttpStatus.valueOf(response.getStatus());
         ErrorCode errorCode = status.is4xxClientError() ? ErrorCode.BAD_REQUEST : ErrorCode.INTERNAL_ERROR;
 
-        return new ModelAndView("error",
+        return new ModelAndView(
+                "error",
                 Map.of(
                         "statusCode", status.value(),
                         "errorCode", errorCode,
@@ -30,7 +31,6 @@ public class BaseErrorController implements ErrorController {
                 status
         );
     }
-
 
     @RequestMapping("/error")
     public ResponseEntity<APIErrorResponse> error(HttpServletResponse response) {
@@ -41,4 +41,5 @@ public class BaseErrorController implements ErrorController {
                 .status(status)
                 .body(APIErrorResponse.of(false, errorCode));
     }
+
 }

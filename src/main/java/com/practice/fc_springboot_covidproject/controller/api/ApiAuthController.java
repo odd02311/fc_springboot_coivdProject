@@ -5,8 +5,9 @@ import com.practice.fc_springboot_covidproject.dto.AdminRequest;
 import com.practice.fc_springboot_covidproject.dto.LoginRequest;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api")
-@RestController
+//@RequestMapping("/api")
+//@RestController
+@Deprecated
 public class ApiAuthController {
 
     @PostMapping("/sign-up")

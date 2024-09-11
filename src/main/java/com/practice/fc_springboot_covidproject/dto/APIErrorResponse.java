@@ -28,4 +28,5 @@ public class APIErrorResponse {
     public static APIErrorResponse of(Boolean success, ErrorCode errorCode, String message) {
         return new APIErrorResponse(success, errorCode.getCode(), errorCode.getMessage(message));
     }
+
 }
