@@ -41,7 +41,7 @@ public class EventController {
     }
 
     @GetMapping("/{eventId}")
-    public ModelAndView eventDetail(@PathVariable Long eventId) {
+    public ModelAndView eventDetail(@PathVariable("eventId") Long eventId) {
         Map<String, Object> map = new HashMap<>();
         EventResponse event = eventService.getEvent(eventId)
                 .map(EventResponse::from)

@@ -2,9 +2,11 @@ package com.practice.fc_springboot_covidproject.service;
 
 import com.practice.fc_springboot_covidproject.constant.ErrorCode;
 import com.practice.fc_springboot_covidproject.constant.EventStatus;
+import com.practice.fc_springboot_covidproject.domain.Place;
 import com.practice.fc_springboot_covidproject.dto.EventDto;
 import com.practice.fc_springboot_covidproject.exception.GeneralException;
 import com.practice.fc_springboot_covidproject.repository.EventRepository;
+import com.practice.fc_springboot_covidproject.repository.PlaceRepository;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.stream.StreamSupport;
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final PlaceRepository placeRepository;
 
     public List<EventDto> getEvents(Predicate predicate) {
         try {
@@ -59,7 +62,9 @@ public class EventService {
                 return false;
             }
 
-            eventRepository.save(eventDTO.toEntity());
+            Place place = placeRepository.findById(eventDTO.placeId())
+                    .orElseThrow(() -> new GeneralException(ErrorCode.NOT_FOUND));
+            eventRepository.save(eventDTO.toEntity(place));
             return true;
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
