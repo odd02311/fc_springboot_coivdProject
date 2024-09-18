@@ -3,6 +3,7 @@ package com.practice.fc_springboot_covidproject.repository;
 import com.practice.fc_springboot_covidproject.constant.EventStatus;
 import com.practice.fc_springboot_covidproject.domain.Event;
 import com.practice.fc_springboot_covidproject.domain.QEvent;
+import com.practice.fc_springboot_covidproject.repository.querydsl.EventRepositoryCustom;
 import com.querydsl.core.types.dsl.ComparableExpression;
 import com.querydsl.core.types.dsl.StringExpression;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,13 +35,14 @@ import java.util.Optional;
 
 public interface EventRepository extends
         JpaRepository<Event, Long>,
+        EventRepositoryCustom,
         QuerydslPredicateExecutor<Event>,
         QuerydslBinderCustomizer<QEvent> {
 
 //    Optional<Event> findByPlaceIdAndEventNameAndAndCapacity(); // 세세한 컨트롤의 쿼리 메소드
 //    @Query("select e from Event e where eventName = :eventName and eventStatus = : eventStatus")  이 쿼리와 동일함
-    List<Event> findByEventNameAndEventStatus(String eventName, EventStatus eventStatus);
-    Optional<Event> findFirstByEventEndDatetimeBetween(LocalDateTime from, LocalDateTime to);
+//    List<Event> findByEventNameAndEventStatus(String eventName, EventStatus eventStatus);
+//    Optional<Event> findFirstByEventEndDatetimeBetween(LocalDateTime from, LocalDateTime to);
 
     @Override
     default void customize(QuerydslBindings bindings, QEvent root) {
