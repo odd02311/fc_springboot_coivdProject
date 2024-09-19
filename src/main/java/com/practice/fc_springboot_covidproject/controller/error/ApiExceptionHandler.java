@@ -1,13 +1,12 @@
 package com.practice.fc_springboot_covidproject.controller.error;
 
 import com.practice.fc_springboot_covidproject.constant.ErrorCode;
-import com.practice.fc_springboot_covidproject.dto.APIErrorResponse;
+import com.practice.fc_springboot_covidproject.dto.ApiErrorResponse;
 import com.practice.fc_springboot_covidproject.exception.GeneralException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +42,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorCode errorCode, HttpHeaders headers, WebRequest request) {
         return super.handleExceptionInternal(
                 e,
-                APIErrorResponse.of(false, errorCode.getCode(), errorCode.getMessage(e)),
+                ApiErrorResponse.of(false, errorCode.getCode(), errorCode.getMessage(e)),
                 headers,
                 errorCode.getHttpStatus(),
                 request

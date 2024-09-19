@@ -69,7 +69,7 @@ public class Place {
 
     @ToString.Exclude
     @OrderBy("id")
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place") // 장소 하나가 여러 개의 이벤트를 가지고 있을 수 있다. 양 방향 관계로 @OneToMany
     private final Set<Event> events = new LinkedHashSet<>();
 
     @ToString.Exclude

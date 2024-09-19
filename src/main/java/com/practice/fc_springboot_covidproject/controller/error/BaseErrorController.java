@@ -1,7 +1,7 @@
 package com.practice.fc_springboot_covidproject.controller.error;
 
 import com.practice.fc_springboot_covidproject.constant.ErrorCode;
-import com.practice.fc_springboot_covidproject.dto.APIErrorResponse;
+import com.practice.fc_springboot_covidproject.dto.ApiErrorResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -33,13 +33,13 @@ public class BaseErrorController implements ErrorController {
     }
 
     @RequestMapping("/error")
-    public ResponseEntity<APIErrorResponse> error(HttpServletResponse response) {
+    public ResponseEntity<ApiErrorResponse> error(HttpServletResponse response) {
         HttpStatus status = HttpStatus.valueOf(response.getStatus());
         ErrorCode errorCode = status.is4xxClientError() ? ErrorCode.BAD_REQUEST : ErrorCode.INTERNAL_ERROR;
 
         return ResponseEntity
                 .status(status)
-                .body(APIErrorResponse.of(false, errorCode));
+                .body(ApiErrorResponse.of(false, errorCode));
     }
 
 }

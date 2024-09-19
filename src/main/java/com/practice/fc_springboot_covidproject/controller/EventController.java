@@ -4,12 +4,18 @@ import com.practice.fc_springboot_covidproject.constant.ErrorCode;
 import com.practice.fc_springboot_covidproject.constant.EventStatus;
 import com.practice.fc_springboot_covidproject.domain.Event;
 import com.practice.fc_springboot_covidproject.dto.EventResponse;
+import com.practice.fc_springboot_covidproject.dto.EventViewResponse;
 import com.practice.fc_springboot_covidproject.exception.GeneralException;
 import com.practice.fc_springboot_covidproject.service.EventService;
 import com.querydsl.core.types.Predicate;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/events")
 @Controller
 public class EventController {
@@ -34,6 +41,30 @@ public class EventController {
                 .stream()
                 .map(EventResponse::from)
                 .toList();
+
+        map.put("events", events);
+
+        return new ModelAndView("event/index", map);
+    }
+
+    @GetMapping("/custom")
+    public ModelAndView customEvents(
+            @Size(min = 2) String placeName,
+            @Size(min = 2) String eventName,
+            EventStatus eventStatus,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventStartDatetime,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventEndDatetime,
+            Pageable pageable
+    ) {
+        Map<String, Object> map = new HashMap<>();
+        Page<EventViewResponse> events = eventService.getEventViewResponse(
+                placeName,
+                eventName,
+                eventStatus,
+                eventStartDatetime,
+                eventEndDatetime,
+                pageable
+        );
 
         map.put("events", events);
 

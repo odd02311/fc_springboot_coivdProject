@@ -1,6 +1,6 @@
 package com.practice.fc_springboot_covidproject.controller.api;
 
-import com.practice.fc_springboot_covidproject.dto.APIDataResponse;
+import com.practice.fc_springboot_covidproject.dto.ApiDataResponse;
 import com.practice.fc_springboot_covidproject.dto.AdminRequest;
 import com.practice.fc_springboot_covidproject.dto.LoginRequest;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 public class ApiAuthController {
 
     @PostMapping("/sign-up")
-    public APIDataResponse<String> signUp(@RequestBody AdminRequest adminRequest) {
-        return APIDataResponse.empty();
+    public ApiDataResponse<String> signUp(@RequestBody AdminRequest adminRequest) {
+        return ApiDataResponse.empty();
     }
 
     @PostMapping("/login")
-    public APIDataResponse<String> login(@RequestBody LoginRequest loginRequest) {
-        return APIDataResponse.empty();
+    public ApiDataResponse<String> login(@RequestBody LoginRequest loginRequest) {
+        return ApiDataResponse.empty();
     }
 
 

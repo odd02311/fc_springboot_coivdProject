@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("데이터 - API 기본 응답")
 class APIDataResponseTest {
@@ -17,7 +16,7 @@ class APIDataResponseTest {
         String data = "test data";
 
         // When
-        APIDataResponse<String> response = APIDataResponse.of(data);
+        ApiDataResponse<String> response = ApiDataResponse.of(data);
 
         // Then
         assertThat(response)
@@ -33,7 +32,7 @@ class APIDataResponseTest {
         // Given
 
         // When
-        APIDataResponse<String> response = APIDataResponse.empty();
+        ApiDataResponse<String> response = ApiDataResponse.empty();
 
         // Then
         assertThat(response)
