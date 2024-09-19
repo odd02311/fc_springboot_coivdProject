@@ -31,6 +31,10 @@ public record PlaceDto(
         return new PlaceDto(id, placeType, placeName, address, phoneNumber, capacity, memo, createdAt, modifiedAt);
     }
 
+    public static PlaceDto idOnly(Long id) {
+        return PlaceDto.of(id, null, null, null, null, null, null, null, null);
+    }
+
     public static PlaceDto of(Place place) {
         return new PlaceDto(
             place.getId(),

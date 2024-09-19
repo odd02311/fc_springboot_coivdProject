@@ -29,17 +29,23 @@ public class BaseExceptionHandler {
     }
 
     @ExceptionHandler
-    public ModelAndView exception(Exception e) {
-        ErrorCode errorCode = ErrorCode.INTERNAL_ERROR;
+    public ModelAndView exception(Exception e, HttpServletResponse response) {
+        HttpStatus httpStatus = HttpStatus.valueOf(response.getStatus());
+        ErrorCode errorCode = httpStatus.is4xxClientError() ? ErrorCode.BAD_REQUEST : ErrorCode.INTERNAL_ERROR;
+
+        if (httpStatus == HttpStatus.OK) {
+            httpStatus = HttpStatus.FORBIDDEN;
+            errorCode = ErrorCode.BAD_REQUEST;
+        }
 
         return new ModelAndView(
                 "error",
                 Map.of(
-                        "statusCode", errorCode.getHttpStatus().value(),
+                        "statusCode", httpStatus.value(),
                         "errorCode", errorCode,
                         "message", errorCode.getMessage(e)
                 ),
-                errorCode.getHttpStatus()
+                httpStatus
         );
     }
 

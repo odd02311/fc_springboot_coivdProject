@@ -2,10 +2,13 @@ package com.practice.fc_springboot_covidproject.repository;
 
 import com.practice.fc_springboot_covidproject.constant.EventStatus;
 import com.practice.fc_springboot_covidproject.domain.Event;
+import com.practice.fc_springboot_covidproject.domain.Place;
 import com.practice.fc_springboot_covidproject.domain.QEvent;
 import com.practice.fc_springboot_covidproject.repository.querydsl.EventRepositoryCustom;
 import com.querydsl.core.types.dsl.ComparableExpression;
 import com.querydsl.core.types.dsl.StringExpression;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -38,6 +41,8 @@ public interface EventRepository extends
         EventRepositoryCustom,
         QuerydslPredicateExecutor<Event>,
         QuerydslBinderCustomizer<QEvent> {
+
+    Page<Event> findByPlace(Place place, Pageable pageable);
 
 //    Optional<Event> findByPlaceIdAndEventNameAndAndCapacity(); // 세세한 컨트롤의 쿼리 메소드
 //    @Query("select e from Event e where eventName = :eventName and eventStatus = : eventStatus")  이 쿼리와 동일함
