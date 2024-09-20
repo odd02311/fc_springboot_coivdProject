@@ -42,7 +42,7 @@ public class EventController {
                 .map(EventResponse::from)
                 .toList();
 
-        map.put("events", events);
+        map.put("/events", events);
 
         return new ModelAndView("event/index", map);
     }

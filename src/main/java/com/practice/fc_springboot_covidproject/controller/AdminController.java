@@ -67,7 +67,7 @@ public class AdminController {
         Page<EventViewResponse> events = eventService.getEvent(placeId, pageable);
 
         return new ModelAndView(
-                "admin/place-detail",
+                "/admin/place-detail",
                 Map.of(
                         "adminOperationStatus", AdminOperationStatus.MODIFY,
                         "place", place,

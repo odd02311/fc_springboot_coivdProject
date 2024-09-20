@@ -31,24 +31,39 @@ public class SecurityConfig {
             AdminService adminService,
             PasswordEncoder passwordEncoder
     ) throws Exception {
+        // AuthenticationManager를 AuthenticationConfiguration을 통해 가져옴
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(
+            AdminService adminService,
+            PasswordEncoder passwordEncoder
+    ) {
+        // DaoAuthenticationProvider를 통해 UserDetailsService와 PasswordEncoder 설정
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(adminService);
         authProvider.setPasswordEncoder(passwordEncoder);
-
-        return new ProviderManager(authProvider);
+        return authProvider;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/events/**", "/places/**").permitAll()
+                        .requestMatchers("/", "/events/**", "/places/**", "/events").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll
+                .formLogin(login -> login
+                        .permitAll()
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/admin/places", true)
+                        .failureUrl("/login?error=true")
                 )
+
                 .logout(logout -> logout
                         .permitAll()
+                        .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                 );
 
